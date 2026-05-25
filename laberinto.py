@@ -112,47 +112,6 @@ def mover_jugador(movimiento):
     if mapa[nueva_y][nueva_x] != "#":
         jugador_x, jugador_y = nueva_x, nueva_y
 
-"""def mover_enemigo():
-
-    global enemigo_x, enemigo_y
-
-    ex, ey = enemigo_x, enemigo_y
-
-    distancia = abs(jugador_x - enemigo_x) + abs(jugador_y - enemigo_y)
-
-    if distancia <= 5:
-
-        if jugador_x > enemigo_x:
-            ex += 1
-
-        elif jugador_x < enemigo_x:
-            ex -= 1
-
-        elif jugador_y > enemigo_y:
-            ey += 1
-
-        elif jugador_y < enemigo_y:
-            ey -= 1
-
-    else:
-
-        direccion = random.choice(["w","a","s","d"])
-
-        if direccion == "w":
-            ey -= 1
-
-        elif direccion == "s":
-            ey += 1
-
-        elif direccion == "a":
-            ex -= 1
-
-        elif direccion == "d":
-            ex += 1
-
-    if mapa[ey][ex] != "#":
-        enemigo_x, enemigo_y = ex, ey
-"""
 def mover_enemigos():
 
     global enemigos
@@ -198,36 +157,27 @@ def mover_enemigos():
                 ex += 1
 
         # evitar paredes
-        if mapa[ey][ex] != "#":
+        """if mapa[ey][ex] != "#":
             nuevos_enemigos.append([ex, ey])
+
+        else:
+            nuevos_enemigos.append([enemigo_x, enemigo_y])"""
+        nueva_posicion = [ex, ey]
+
+        otros_enemigos = enemigos.copy()
+        otros_enemigos.remove([enemigo_x, enemigo_y])
+        if (
+            mapa[ey][ex] != "#"
+            and nueva_posicion not in nuevos_enemigos
+            and nueva_posicion not in otros_enemigos
+        ):
+            nuevos_enemigos.append(nueva_posicion)
 
         else:
             nuevos_enemigos.append([enemigo_x, enemigo_y])
 
     enemigos = nuevos_enemigos
 
-"""def verificar_choque():
-    global enemigo_x, enemigo_y, jugador_x, jugador_y
-    global vidas
-    
-    if jugador_x == enemigo_x and jugador_y == enemigo_y:
-
-        vidas -= 1
-
-        if vidas <= 0:
-            limpiar()
-            print(ROJO + "💀 GAME OVER" + RESET)
-            
-            return True
-
-        # reiniciar posiciones
-        jugador_x, jugador_y = 1, 1
-        enemigo_x, enemigo_y = 9, 3
-
-        print(AMARILLO + "⚠️ El enemigo te atrapó" + RESET)
-        input("Presiona Enter para continuar...")
-    
-    return False"""
 def verificar_choque():
 
     global jugador_x, jugador_y
