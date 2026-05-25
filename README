@@ -1,0 +1,45 @@
+# ASCII Dungeon 👾
+
+Juego de laberinto ASCII hecho en Python para terminal.
+
+## Características
+
+- Movimiento en tiempo real
+- Enemigos con IA básica
+- Niebla de guerra
+- HUD con vidas
+- Colores ANSI
+- Controles WASD
+
+## Controles
+
+| Tecla | Acción |
+|------|------|
+| W | Arriba |
+| A | Izquierda |
+| S | Abajo |
+| D | Derecha |
+| Q | Salir |
+
+## Requisitos
+
+- Python 3
+- Windows CMD / PowerShell
+
+## Ejecutar
+
+```bash
+python juego.py
+```
+
+## Captura
+
+(agregar screenshot después 😄)
+
+## Futuras mejoras
+
+- Múltiples enemigos
+- Generación procedural
+- Sistema de niveles
+- Pathfinding
+- Memoria del mapa
