@@ -26,8 +26,12 @@ mapa = [
 ]
 
 jugador_x, jugador_y = 1, 1
-enemigo_x, enemigo_y = 9, 3
-
+#enemigo_x, enemigo_y = 9, 3
+enemigos = [
+    [9, 3],
+    [15, 5],
+    [3, 6]
+]
 
 def limpiar():
     os.system("cls" if os.name == "nt" else "clear")
@@ -54,9 +58,11 @@ def dibujar():
                 pixel += AZUL + "@" + RESET
 
             # enemigo
-            elif x == enemigo_x and y == enemigo_y:
+            #elif x == enemigo_x and y == enemigo_y:
+            #    pixel += ROJO + "E" + RESET
+            elif [x, y] in enemigos:
                 pixel += ROJO + "E" + RESET
-
+                
             # paredes
             elif mapa[y][x] == "#":
                 pixel += CYAN + "█" + RESET
@@ -106,7 +112,7 @@ def mover_jugador(movimiento):
     if mapa[nueva_y][nueva_x] != "#":
         jugador_x, jugador_y = nueva_x, nueva_y
 
-def mover_enemigo():
+"""def mover_enemigo():
 
     global enemigo_x, enemigo_y
 
@@ -146,8 +152,61 @@ def mover_enemigo():
 
     if mapa[ey][ex] != "#":
         enemigo_x, enemigo_y = ex, ey
+"""
+def mover_enemigos():
 
-def verificar_choque():
+    global enemigos
+
+    nuevos_enemigos = []
+
+    for enemigo_x, enemigo_y in enemigos:
+
+        ex, ey = enemigo_x, enemigo_y
+
+        distancia = abs(jugador_x - enemigo_x) + abs(jugador_y - enemigo_y)
+
+        # perseguir
+        if distancia <= 5:
+
+            if jugador_x > enemigo_x:
+                ex += 1
+
+            elif jugador_x < enemigo_x:
+                ex -= 1
+
+            elif jugador_y > enemigo_y:
+                ey += 1
+
+            elif jugador_y < enemigo_y:
+                ey -= 1
+
+        # random
+        else:
+
+            direccion = random.choice(["w", "a", "s", "d"])
+
+            if direccion == "w":
+                ey -= 1
+
+            elif direccion == "s":
+                ey += 1
+
+            elif direccion == "a":
+                ex -= 1
+
+            elif direccion == "d":
+                ex += 1
+
+        # evitar paredes
+        if mapa[ey][ex] != "#":
+            nuevos_enemigos.append([ex, ey])
+
+        else:
+            nuevos_enemigos.append([enemigo_x, enemigo_y])
+
+    enemigos = nuevos_enemigos
+
+"""def verificar_choque():
     global enemigo_x, enemigo_y, jugador_x, jugador_y
     global vidas
     
@@ -168,6 +227,36 @@ def verificar_choque():
         print(AMARILLO + "⚠️ El enemigo te atrapó" + RESET)
         input("Presiona Enter para continuar...")
     
+    return False"""
+def verificar_choque():
+
+    global jugador_x, jugador_y
+    global enemigos
+    global vidas
+
+    for enemigo_x, enemigo_y in enemigos:
+
+        if jugador_x == enemigo_x and jugador_y == enemigo_y:
+
+            vidas -= 1
+
+            if vidas <= 0:
+                limpiar()
+                print(ROJO + "💀 GAME OVER" + RESET)
+
+                return True
+
+            jugador_x, jugador_y = 1, 1
+
+            enemigos = [
+                [9, 3],
+                [15, 5],
+                [3, 6]
+            ]
+
+            print(AMARILLO + "⚠️ El enemigo te atrapó" + RESET)
+            input("Presiona Enter para continuar...")
+
     return False
     
 def verficar_victoria():
@@ -196,7 +285,7 @@ while True:
     
     mover_jugador(movimiento)
 
-    mover_enemigo()
+    mover_enemigos()
     
 
     # choque
