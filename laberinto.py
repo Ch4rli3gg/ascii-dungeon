@@ -33,13 +33,24 @@ enemigos = [
     [3, 6]
 ]
 
+memoria = []
+
+for fila in mapa:
+
+    nueva_fila = []
+
+    for celda in fila:
+        nueva_fila.append(False)
+
+    memoria.append(nueva_fila)
+
 def limpiar():
     os.system("cls" if os.name == "nt" else "clear")
 
 
 def dibujar():
 
-    radio_vision = 2
+    radio_vision = 4
 
     for y in range(len(mapa)):
         pixel= ""
@@ -47,10 +58,16 @@ def dibujar():
             
             # distancia entre jugador y celda
             distancia = abs(x - jugador_x) + abs(y - jugador_y)
+            if distancia <= radio_vision:
+                memoria[y][x] = True
 
             # niebla de guerra
             if distancia > radio_vision:
-                pixel += NEGRO + "░" + RESET
+                
+                if memoria[y][x]:
+                    pixel += CYAN + "▒" + RESET
+                else:
+                    pixel += NEGRO + "░" + RESET
                 continue
 
             # jugador
