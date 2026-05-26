@@ -14,23 +14,35 @@ BLANCO = "\033[97m"
 RESET = "\033[0m"
 
 mapa = [
-    list("####################"),
-    list("#     #            #"),
-    list("# ### # ####### ## #"),
-    list("# #           #    #"),
-    list("# # ####### # #### #"),
-    list("# #       # #      #"),
-    list("# ####### # ###### #"),
-    list("#         #      X #"),
-    list("####################")
+    list("#######################"),
+    list("#              #      #"),
+    list("#    # # # #   # #### #"),
+    list("#    #   # #   # #  # #"),
+    list("#    # ### ##### #  # #"),
+    list("###### #            # #"),
+    list("#      # ############ #"),
+    list("# #### # #            #"),
+    list("# #    # # ##### #### #"),
+    list("# #      # #   # #  # #"),
+    list("# #      #     #   X# #"),
+    list("# #      # ##### #### #"),
+    list("# #      # #          #"),
+    list("# ######## # ######## #"),
+    list("#          # #      # #"),
+    list("# ##### #### #  ### # #"),
+    list("# #   # #    #      # #"),
+    list("# # # # # ####  #   # #"),
+    list("# #     #       #     #"),
+    list("#######################"),    
 ]
 
 jugador_x, jugador_y = 1, 1
-#enemigo_x, enemigo_y = 9, 3
+
 enemigos = [
-    [9, 3],
-    [15, 5],
-    [3, 6]
+    [12, 2],
+    [10, 10],
+    [7, 15],
+    [17, 17]
 ]
 
 memoria = []
@@ -75,8 +87,7 @@ def dibujar():
                 pixel += AZUL + "@" + RESET
 
             # enemigo
-            #elif x == enemigo_x and y == enemigo_y:
-            #    pixel += ROJO + "E" + RESET
+            
             elif [x, y] in enemigos:
                 pixel += ROJO + "E" + RESET
                 
@@ -174,11 +185,7 @@ def mover_enemigos():
                 ex += 1
 
         # evitar paredes
-        """if mapa[ey][ex] != "#":
-            nuevos_enemigos.append([ex, ey])
-
-        else:
-            nuevos_enemigos.append([enemigo_x, enemigo_y])"""
+        
         nueva_posicion = [ex, ey]
 
         otros_enemigos = enemigos.copy()
@@ -215,10 +222,12 @@ def verificar_choque():
 
             jugador_x, jugador_y = 1, 1
 
+            
             enemigos = [
-                [9, 3],
-                [15, 5],
-                [3, 6]
+                [12, 2],
+                [10, 10],
+                [7, 15],
+                [17, 17]
             ]
 
             print(AMARILLO + "⚠️ El enemigo te atrapó" + RESET)
@@ -236,11 +245,6 @@ def verficar_victoria():
     
 while True:
     limpiar()
-    
-    """print(CYAN + "=== LABERINTO TERMINAL ===" + RESET)
-    print(f"{'❤️ ' * vidas}   🗺️ Nivel: {nivel}")
-    print("WASD para mover | Q para salir")
-    print()"""
     hud()
     dibujar()
 
@@ -256,28 +260,11 @@ while True:
     
 
     # choque
-    """if jugador_x == enemigo_x and jugador_y == enemigo_y:
-
-        vidas -= 1
-
-        if vidas <= 0:
-            limpiar()
-            print(ROJO + "💀 GAME OVER" + RESET)
-            break
-
-        # reiniciar posiciones
-        jugador_x, jugador_y = 1, 1
-        enemigo_x, enemigo_y = 9, 3
-
-        print(AMARILLO + "⚠️ El enemigo te atrapó" + RESET)
-        input("Presiona Enter para continuar...")"""
+    
     if verificar_choque():
         break
     # victoria
     if verficar_victoria():
         break
-    """if mapa[jugador_y][jugador_x] == "X":
-        limpiar()
-        print("🎉 GANASTE")
-        break"""
+    
     
