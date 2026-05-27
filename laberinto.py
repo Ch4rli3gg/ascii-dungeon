@@ -39,10 +39,10 @@ mapa = [
 jugador_x, jugador_y = 1, 1
 
 enemigos = [
-    [12, 2],
-    [10, 10],
-    [7, 15],
-    [17, 17]
+    {"x": 12, "y": 2, "tipo": "normal"},
+    {"x": 10, "y": 10, "tipo": "rapido"},
+    {"x": 7, "y": 15, "tipo": "loco"},
+    {"x": 17, "y": 17, "tipo": "loco"}
 ]
 
 memoria = []
@@ -59,11 +59,10 @@ for fila in mapa:
 def limpiar():
     os.system("cls" if os.name == "nt" else "clear")
 
-
 def dibujar():
 
     radio_vision = 4
-
+    
     for y in range(len(mapa)):
         pixel= ""
         for x in range(len(mapa[y])):
@@ -74,13 +73,13 @@ def dibujar():
                 memoria[y][x] = True
 
             # niebla de guerra
-            if distancia > radio_vision:
+            """if distancia > radio_vision:
                 
                 if memoria[y][x]:
                     pixel += CYAN + "▒" + RESET
                 else:
                     pixel += NEGRO + "░" + RESET
-                continue
+                continue"""
 
             # jugador
             if x == jugador_x and y == jugador_y:
@@ -88,20 +87,45 @@ def dibujar():
 
             # enemigo
             
-            elif [x, y] in enemigos:
-                pixel += ROJO + "E" + RESET
-                
-            # paredes
-            elif mapa[y][x] == "#":
-                pixel += CYAN + "█" + RESET
-
-            # salida
-            elif mapa[y][x] == "X":
-                pixel += VERDE + "X" + RESET
-
-            # espacios vacíos
+            
             else:
-                pixel += " "
+                enemigo_dibujado = False
+
+            
+                for enemigo in enemigos:
+
+                    enemigo_x = enemigo["x"]
+                    enemigo_y = enemigo["y"]
+                    tipo = enemigo["tipo"]
+
+                    if x == enemigo_x and y == enemigo_y:
+
+                        if tipo == "normal":
+                            simbolo = "E"
+
+                        elif tipo == "rapido":
+                            simbolo = "R"
+
+                        elif tipo == "loco":
+                            simbolo = "C"
+
+                        pixel += ROJO + simbolo + RESET
+                        enemigo_dibujado = True
+                        break
+            # paredes
+            #elif mapa[y][x] == "#":
+                if not enemigo_dibujado:
+                
+                    if mapa[y][x] == "#":
+                        pixel += CYAN + "█" + RESET
+
+                    # salida
+                    elif mapa[y][x] == "X":
+                            pixel += VERDE + "X" + RESET
+
+                    # espacios vacíos
+                    else:
+                        pixel += " "
 
         print(pixel)
                
@@ -146,10 +170,15 @@ def mover_enemigos():
 
     nuevos_enemigos = []
 
-    for enemigo_x, enemigo_y in enemigos:
+    #for enemigo_x, enemigo_y in enemigos:
 
+    #    ex, ey = enemigo_x, enemigo_y
+    for enemigo in enemigos:
+
+        enemigo_x = enemigo["x"]
+        enemigo_y = enemigo["y"]
+        tipo = enemigo["tipo"]
         ex, ey = enemigo_x, enemigo_y
-
         distancia = abs(jugador_x - enemigo_x) + abs(jugador_y - enemigo_y)
 
         # perseguir
@@ -188,17 +217,28 @@ def mover_enemigos():
         
         nueva_posicion = [ex, ey]
 
-        otros_enemigos = enemigos.copy()
-        otros_enemigos.remove([enemigo_x, enemigo_y])
-        if (
-            mapa[ey][ex] != "#"
-            and nueva_posicion not in nuevos_enemigos
-            and nueva_posicion not in otros_enemigos
-        ):
-            nuevos_enemigos.append(nueva_posicion)
+        ocupado = False
 
+        for otro in enemigos:
+
+            if otro != enemigo:
+
+                if ex == otro["x"] and ey == otro["y"]:
+                    ocupado = True
+            #nuevos_enemigos.append(nueva_posicion)
+        if mapa[ey][ex] != "#" and not ocupado:
+            nuevos_enemigos.append({
+                "x": ex,
+                "y": ey,
+                "tipo": tipo
+            })
         else:
-            nuevos_enemigos.append([enemigo_x, enemigo_y])
+            #nuevos_enemigos.append([enemigo_x, enemigo_y])
+            nuevos_enemigos.append({
+                "x": enemigo_x,
+                "y": enemigo_y,
+                "tipo": tipo
+            })
 
     enemigos = nuevos_enemigos
 
@@ -208,8 +248,12 @@ def verificar_choque():
     global enemigos
     global vidas
 
-    for enemigo_x, enemigo_y in enemigos:
+    #for enemigo_x, enemigo_y in enemigos:
+    for enemigo in enemigos:
 
+        enemigo_x = enemigo["x"]
+        enemigo_y = enemigo["y"]
+    
         if jugador_x == enemigo_x and jugador_y == enemigo_y:
 
             vidas -= 1
@@ -224,11 +268,11 @@ def verificar_choque():
 
             
             enemigos = [
-                [12, 2],
-                [10, 10],
-                [7, 15],
-                [17, 17]
-            ]
+                        {"x": 12, "y": 2, "tipo": "normal"},
+                        {"x": 10, "y": 10, "tipo": "rapido"},
+                        {"x": 7, "y": 15, "tipo": "loco"},
+                        {"x": 17, "y": 17, "tipo": "loco"}
+                    ]
 
             print(AMARILLO + "⚠️ El enemigo te atrapó" + RESET)
             input("Presiona Enter para continuar...")
