@@ -313,7 +313,7 @@ while True:
     hud()
     dibujar()
 
-    #movimiento = input("\nMover (w/a/s/d): ")
+    
     movimiento = tecla()
     
     if movimiento == "q":
