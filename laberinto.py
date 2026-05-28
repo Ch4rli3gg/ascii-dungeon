@@ -15,7 +15,7 @@ RESET = "\033[0m"
 
 mapa = [
     list("#######################"),
-    list("#              #      #"),
+    list("#          D   #      #"),
     list("#    # # # #   # #### #"),
     list("#    #   # #   # #  # #"),
     list("#    # ### ##### #  # #"),
@@ -26,13 +26,13 @@ mapa = [
     list("# #      # #   # #  # #"),
     list("# #      #     #   X# #"),
     list("# #      # ##### #### #"),
-    list("# #      # #          #"),
+    list("# # K    # #          #"),
     list("# ######## # ######## #"),
     list("#          # #      # #"),
     list("# ##### #### #  ### # #"),
     list("# #   # #    #      # #"),
     list("# # # # # ####  #   # #"),
-    list("# #     #       #     #"),
+    list("# #     D       #     #"),
     list("#######################"),    
 ]
 
@@ -104,7 +104,6 @@ def dibujar():
                             simbolo = "E"
 
                         
-
                         elif tipo == "loco":
                             simbolo = "C"
 
@@ -121,6 +120,12 @@ def dibujar():
                     # salida
                     elif mapa[y][x] == "X":
                             pixel += VERDE + "X" + RESET
+                    
+                    elif mapa[y][x] == "K":
+                        pixel += AMARILLO + "K" + RESET
+
+                    elif mapa[y][x] == "D":
+                        pixel += MAGENTA + "D" + RESET
 
                     # espacios vacíos
                     else:
@@ -130,10 +135,12 @@ def dibujar():
                
 vidas = 3
 nivel = 1
+llaves = 0
 
 def hud():
     print(CYAN + "=== LABERINTO TERMINAL ===" + RESET)
     print(f"{'❤️ ' * vidas}   🗺️ Nivel: {nivel}")
+    print(f"🔑 Llaves: {llaves}")
     print("WASD para mover | Q para salir")
     print()    
 
@@ -142,7 +149,7 @@ def tecla():
     
 def mover_jugador(movimiento):
 
-    global jugador_x, jugador_y
+    global jugador_x, jugador_y, llaves
 
     
     nueva_x = jugador_x
@@ -160,8 +167,30 @@ def mover_jugador(movimiento):
     elif movimiento == "d":
         nueva_x += 1
 
-    if mapa[nueva_y][nueva_x] != "#":
-        jugador_x, jugador_y = nueva_x, nueva_y
+    #if mapa[nueva_y][nueva_x] != "#":
+    #    jugador_x, jugador_y = nueva_x, nueva_y
+    celda = mapa[nueva_y][nueva_x]
+
+    # pared
+    if celda == "#":
+        return
+
+    # recoger llave
+    if celda == "K":
+        llaves += 1
+        mapa[nueva_y][nueva_x] = " "
+
+    # puerta
+    if celda == "D":
+
+        if llaves > 0:
+            llaves -= 1
+            mapa[nueva_y][nueva_x] = " "
+
+        else:
+            return
+
+    jugador_x, jugador_y = nueva_x, nueva_y
 
 def mover_enemigos():
 
@@ -199,6 +228,9 @@ def mover_enemigos():
                 ex += 1
 
         # enemigos normales y rápidos 👹⚡
+        
+
+        
         else:
 
             if distancia <= 5:
@@ -245,7 +277,8 @@ def mover_enemigos():
                     ocupado = True
             #nuevos_enemigos.append(nueva_posicion)
         
-        if mapa[ey][ex] != "#" and not ocupado:
+        #if mapa[ey][ex] != "#" and not ocupado:
+        if mapa[ey][ex] not in ["#", "D"] and not ocupado:
             nuevos_enemigos.append({
                 "x": ex,
                 "y": ey,
