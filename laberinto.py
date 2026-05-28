@@ -40,7 +40,7 @@ jugador_x, jugador_y = 1, 1
 
 enemigos = [
     {"x": 12, "y": 2, "tipo": "normal"},
-    {"x": 10, "y": 10, "tipo": "rapido"},
+    {"x": 10, "y": 10, "tipo": "normal"},
     {"x": 7, "y": 15, "tipo": "loco"},
     {"x": 17, "y": 17, "tipo": "loco"}
 ]
@@ -103,8 +103,7 @@ def dibujar():
                         if tipo == "normal":
                             simbolo = "E"
 
-                        elif tipo == "rapido":
-                            simbolo = "R"
+                        
 
                         elif tipo == "loco":
                             simbolo = "C"
@@ -181,23 +180,9 @@ def mover_enemigos():
         ex, ey = enemigo_x, enemigo_y
         distancia = abs(jugador_x - enemigo_x) + abs(jugador_y - enemigo_y)
 
-        # perseguir
-        if distancia <= 5:
-
-            if jugador_x > enemigo_x:
-                ex += 1
-
-            elif jugador_x < enemigo_x:
-                ex -= 1
-
-            elif jugador_y > enemigo_y:
-                ey += 1
-
-            elif jugador_y < enemigo_y:
-                ey -= 1
-
-        # random
-        else:
+        
+        # enemigo loco 🤪
+        if tipo == "loco":
 
             direccion = random.choice(["w", "a", "s", "d"])
 
@@ -213,6 +198,39 @@ def mover_enemigos():
             elif direccion == "d":
                 ex += 1
 
+        # enemigos normales y rápidos 👹⚡
+        else:
+
+            if distancia <= 5:
+
+                if jugador_x > enemigo_x:
+                    ex += 1
+
+                elif jugador_x < enemigo_x:
+                    ex -= 1
+
+                elif jugador_y > enemigo_y:
+                    ey += 1
+
+                elif jugador_y < enemigo_y:
+                    ey -= 1
+
+            else:
+
+                direccion = random.choice(["w", "a", "s", "d"])
+
+                if direccion == "w":
+                    ey -= 1
+
+                elif direccion == "s":
+                    ey += 1
+
+                elif direccion == "a":
+                    ex -= 1
+
+                elif direccion == "d":
+                    ex += 1
+
         # evitar paredes
         
         nueva_posicion = [ex, ey]
@@ -226,20 +244,23 @@ def mover_enemigos():
                 if ex == otro["x"] and ey == otro["y"]:
                     ocupado = True
             #nuevos_enemigos.append(nueva_posicion)
+        
         if mapa[ey][ex] != "#" and not ocupado:
             nuevos_enemigos.append({
                 "x": ex,
                 "y": ey,
                 "tipo": tipo
             })
+        
+        
         else:
-            #nuevos_enemigos.append([enemigo_x, enemigo_y])
             nuevos_enemigos.append({
                 "x": enemigo_x,
                 "y": enemigo_y,
                 "tipo": tipo
-            })
-
+            }
+                
+            )
     enemigos = nuevos_enemigos
 
 def verificar_choque():
