@@ -1,5 +1,3 @@
-from leer_salas import cargar_mapa
-
 def buscar_jugador(mapa):
     
     for y in range(len(mapa)):
@@ -13,5 +11,3 @@ def buscar_jugador(mapa):
     #por si la sala no tiene @:
     return None
             
-#mapa = cargar_mapa("sala_inicio.txt")
-#print(buscar_jugador(mapa))

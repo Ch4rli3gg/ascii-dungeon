@@ -1,7 +1,3 @@
-from leer_salas import cargar_mapa
-
-#mapa = cargar_mapa("sala_enemigos.txt")
-
 def buscar_enemigos(mapa):
     
     enemigos=[]
@@ -24,10 +20,10 @@ def buscar_enemigos(mapa):
                     "y": y,
                     "tipo": "loco"
                 })
-                
     return enemigos
+                
             
     
     
-#print(buscar_enemigos(mapa))
+
     

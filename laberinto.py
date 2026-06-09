@@ -1,3 +1,7 @@
+from salas.leer_salas import cargar_mapa
+from salas.buscar_jugador import buscar_jugador
+from salas.buscar_enemigos import buscar_enemigos
+
 import os
 import random
 import msvcrt
@@ -13,37 +17,11 @@ BLANCO = "\033[97m"
 
 RESET = "\033[0m"
 
-mapa = [
-    list("#######################"),
-    list("#          D   #      #"),
-    list("#    # # # #   # #### #"),
-    list("#    #   # #   # #  # #"),
-    list("#    # ### ##### #  # #"),
-    list("###### #            # #"),
-    list("#      # ############ #"),
-    list("# #### # #            #"),
-    list("# #    # # ##### #### #"),
-    list("# #      # #   # #  # #"),
-    list("# #      #     #   X# #"),
-    list("# #      # ##### #### #"),
-    list("# # K    # #          #"),
-    list("# ######## # ######## #"),
-    list("#          # #      # #"),
-    list("# ##### #### #  ### # #"),
-    list("# #   # #    #      # #"),
-    list("# # # # # ####  #   # #"),
-    list("# #     D       #     #"),
-    list("#######################"),    
-]
+mapa = cargar_mapa("salas/sala_inicio.txt")
 
-jugador_x, jugador_y = 1, 1
+jugador_x, jugador_y = buscar_jugador(mapa)
 
-enemigos = [
-    {"x": 12, "y": 2, "tipo": "normal"},
-    {"x": 10, "y": 10, "tipo": "normal"},
-    {"x": 7, "y": 15, "tipo": "loco"},
-    {"x": 17, "y": 17, "tipo": "loco"}
-]
+enemigos = buscar_enemigos(mapa)
 
 memoria = []
 
@@ -318,15 +296,10 @@ def verificar_choque():
 
                 return True
 
-            jugador_x, jugador_y = 1, 1
+            jugador_x, jugador_y = buscar_jugador(mapa)
 
-            
-            enemigos = [
-                        {"x": 12, "y": 2, "tipo": "normal"},
-                        {"x": 10, "y": 10, "tipo": "rapido"},
-                        {"x": 7, "y": 15, "tipo": "loco"},
-                        {"x": 17, "y": 17, "tipo": "loco"}
-                    ]
+                        
+            enemigos = buscar_enemigos(mapa)
 
             print(AMARILLO + "⚠️ El enemigo te atrapó" + RESET)
             input("Presiona Enter para continuar...")
