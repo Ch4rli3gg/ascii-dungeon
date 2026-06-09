@@ -1,6 +1,6 @@
-from salas.leer_salas import cargar_mapa
 from salas.buscar_jugador import buscar_jugador
 from salas.buscar_enemigos import buscar_enemigos
+from salas.cargar_nivel import cargar_nivel
 
 import os
 import random
@@ -17,11 +17,7 @@ BLANCO = "\033[97m"
 
 RESET = "\033[0m"
 
-mapa = cargar_mapa("salas/sala_inicio.txt")
-
-jugador_x, jugador_y = buscar_jugador(mapa)
-
-enemigos = buscar_enemigos(mapa)
+mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_prueba.txt")
 
 memoria = []
 
@@ -300,13 +296,14 @@ def verificar_choque():
 
                         
             enemigos = buscar_enemigos(mapa)
+            #mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_prueba.txt")
 
             print(AMARILLO + "⚠️ El enemigo te atrapó" + RESET)
             input("Presiona Enter para continuar...")
 
     return False
     
-def verficar_victoria():
+def verificar_victoria():
     if mapa[jugador_y][jugador_x] == "X":
         limpiar()
         print("🎉 GANASTE")
@@ -335,7 +332,7 @@ while True:
     if verificar_choque():
         break
     # victoria
-    if verficar_victoria():
+    if verificar_victoria():
         break
     
     
