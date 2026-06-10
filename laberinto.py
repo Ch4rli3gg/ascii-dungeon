@@ -17,7 +17,7 @@ BLANCO = "\033[97m"
 
 RESET = "\033[0m"
 
-mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_prueba.txt")
+mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_inicio.txt")
 
 memoria = []
 
@@ -124,6 +124,8 @@ def tecla():
 def mover_jugador(movimiento):
 
     global jugador_x, jugador_y, llaves
+    global mapa
+    global enemigos
 
     
     nueva_x = jugador_x
@@ -144,6 +146,16 @@ def mover_jugador(movimiento):
     #if mapa[nueva_y][nueva_x] != "#":
     #    jugador_x, jugador_y = nueva_x, nueva_y
     celda = mapa[nueva_y][nueva_x]
+    
+    if nueva_x == 4 and nueva_y == 5:
+        mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/pasillo.txt")
+        
+        return
+    
+    if nueva_x == 4 and nueva_y == 0:
+        mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_inicio.txt")
+        
+        return
 
     # pared
     if celda == "#":
