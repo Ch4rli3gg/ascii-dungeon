@@ -1,6 +1,7 @@
 from salas.buscar_jugador import buscar_jugador
 from salas.buscar_enemigos import buscar_enemigos
 from salas.cargar_nivel import cargar_nivel
+from salas.mundo import conexiones
 
 import os
 import random
@@ -148,8 +149,24 @@ def mover_jugador(movimiento):
     #if mapa[nueva_y][nueva_x] != "#":
     #    jugador_x, jugador_y = nueva_x, nueva_y
     celda = mapa[nueva_y][nueva_x]
-    
-    if sala_actual == "inicio":
+
+    destino = conexiones[sala_actual].get(
+        (nueva_x, nueva_y)
+    )
+
+
+    if destino:
+
+        mapa, jugador_x, jugador_y, enemigos = cargar_nivel(
+            destino["archivo"]
+        )
+
+        sala_actual = destino["sala"]
+
+        jugador_x, jugador_y = destino["spawn"]
+
+        return
+    """if sala_actual == "inicio":
         
         if nueva_x == 4 and nueva_y == 5:
             
@@ -215,7 +232,7 @@ def mover_jugador(movimiento):
             
             sala_actual = "llave"
             
-            return
+            return"""
         
     
 
