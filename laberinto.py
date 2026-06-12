@@ -147,13 +147,12 @@ def mover_jugador(movimiento):
         nueva_x += 1
 
     #if mapa[nueva_y][nueva_x] != "#":
-    #    jugador_x, jugador_y = nueva_x, nueva_y
-    celda = mapa[nueva_y][nueva_x]
+    
 
     destino = conexiones[sala_actual].get(
         (nueva_x, nueva_y)
     )
-
+    
 
     if destino:
 
@@ -166,74 +165,14 @@ def mover_jugador(movimiento):
         jugador_x, jugador_y = destino["spawn"]
 
         return
-    """if sala_actual == "inicio":
-        
-        if nueva_x == 4 and nueva_y == 5:
-            
-            mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/pasillo.txt")
-            
-            sala_actual = "pasillo"
-            
-            return
     
-    elif sala_actual == "pasillo":
-        
-        if nueva_x == 4 and nueva_y == 0:
-            mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_inicio.txt")
-            
-            sala_actual = "inicio"
-            
-            return
-        
-        elif nueva_x == 4 and nueva_y == 5:
-            mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_enemigos.txt")
-            sala_actual = "enemigos"
-            return
-        
-    elif sala_actual == "enemigos":
-        
-        if nueva_x == 4 and nueva_y == 0:
-            
-            mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/pasillo.txt")
-            
-            sala_actual = "pasillo"
-            
-            return
-        
-        elif nueva_x == 4 and nueva_y == 5:
-            mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_llave.txt")
-            
-            sala_actual = "llave"
-            
-            return
-        
-    elif sala_actual == "llave":
-                            
-        if nueva_x == 4 and nueva_y == 0:
-            
-            mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_enemigos.txt")
-            
-            sala_actual = "enemigos"
-            
-            return
-        
-        elif nueva_x == 4 and nueva_y == 5:
-            mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_puerta.txt")
-            
-            sala_actual = "puerta"
-            
-            return
-    
-    elif sala_actual == "puerta":
-                        
-        if nueva_x == 4 and nueva_y == 0:
-            
-            mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_llave.txt")
-            
-            sala_actual = "llave"
-            
-            return"""
-        
+    if nueva_y < 0 or nueva_y >= len(mapa):
+        return
+
+    if nueva_x < 0 or nueva_x >= len(mapa[nueva_y]):
+        return
+    #    jugador_x, jugador_y = nueva_x, nueva_y
+    celda = mapa[nueva_y][nueva_x]
     
 
     # pared

@@ -2,7 +2,7 @@ conexiones = {
 
     "inicio": {
 
-        (4,5): {
+        (4,6): {
             "sala": "pasillo",
             "archivo": "salas/pasillo.txt",
             "spawn": (4,0)
@@ -13,13 +13,13 @@ conexiones = {
 
     "pasillo": {
 
-        (4,0): {
+        (4,-1): {
             "sala": "inicio",
             "archivo": "salas/sala_inicio.txt",
             "spawn": (4,5)
         },
 
-        (4,5): {
+        (4,6): {
             "sala": "enemigos",
             "archivo": "salas/sala_enemigos.txt",
             "spawn": (4,0)
@@ -30,13 +30,13 @@ conexiones = {
 
     "enemigos": {
 
-        (4,0): {
+        (4,-1): {
             "sala": "pasillo",
             "archivo": "salas/pasillo.txt",
             "spawn": (4,5)
         },
 
-        (4,5): {
+        (4,6): {
             "sala": "llave",
             "archivo": "salas/sala_llave.txt",
             "spawn": (4,0)
@@ -47,13 +47,13 @@ conexiones = {
 
     "llave": {
 
-        (4,0): {
+        (4,-1): {
             "sala": "enemigos",
             "archivo": "salas/sala_enemigos.txt",
             "spawn": (4,5)
         },
 
-        (4,5): {
+        (4,6): {
             "sala": "puerta",
             "archivo": "salas/sala_puerta.txt",
             "spawn": (4,0)
@@ -64,7 +64,7 @@ conexiones = {
 
     "puerta": {
 
-        (4,0): {
+        (4,-1): {
             "sala": "llave",
             "archivo": "salas/sala_llave.txt",
             "spawn": (4,5)
