@@ -18,7 +18,19 @@ BLANCO = "\033[97m"
 
 RESET = "\033[0m"
 
-mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_inicio.txt")
+estado_salas = {
+
+    "llave": {
+        "llave": True
+    },
+    
+    "puerta": {
+        "puerta": True
+    }
+
+}
+
+mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_inicio.txt",estado_salas)
 
 memoria = []
 
@@ -114,6 +126,8 @@ vidas = 3
 nivel = 1
 llaves = 0
 
+
+
 def hud():
     print(CYAN + "=== LABERINTO TERMINAL ===" + RESET)
     print(f"{'❤️ ' * vidas}   🗺️ Nivel: {nivel}")
@@ -127,7 +141,7 @@ def tecla():
 def mover_jugador(movimiento):
 
     global jugador_x, jugador_y, llaves
-    global mapa, sala_actual
+    global mapa, sala_actual, estado_salas
     global enemigos
 
     
@@ -157,7 +171,7 @@ def mover_jugador(movimiento):
     if destino:
 
         mapa, jugador_x, jugador_y, enemigos = cargar_nivel(
-            destino["archivo"]
+            destino["archivo"], estado_salas
         )
 
         sala_actual = destino["sala"]
@@ -183,6 +197,7 @@ def mover_jugador(movimiento):
     if celda == "K":
         llaves += 1
         mapa[nueva_y][nueva_x] = " "
+        estado_salas["llave"]["llave"] = False
 
     # puerta
     if celda == "D":
@@ -190,6 +205,8 @@ def mover_jugador(movimiento):
         if llaves > 0:
             llaves -= 1
             mapa[nueva_y][nueva_x] = " "
+            estado_salas["puerta"]["puerta"] = False
+            
 
         else:
             return

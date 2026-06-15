@@ -2,9 +2,35 @@ from salas.leer_salas import cargar_mapa
 from salas.buscar_jugador import buscar_jugador
 from salas.buscar_enemigos import buscar_enemigos
 
-def cargar_nivel(sala):
+def cargar_nivel(sala, estado_salas):
     
     mapa = cargar_mapa(sala)
+    
+    if sala == "salas/sala_llave.txt":
+
+        if estado_salas["llave"]["llave"] == False:
+
+            for y in range(len(mapa)):
+
+                for x in range(len(mapa[y])):
+
+                    if mapa[y][x] == "K":
+
+                        mapa[y][x] = " "
+                        
+    elif sala == "salas/sala_puerta.txt":
+        
+        if estado_salas["puerta"]["puerta"] == False:
+
+            for y in range(len(mapa)):
+
+                for x in range(len(mapa[y])):
+
+                    if mapa[y][x] == "D":
+
+                        mapa[y][x] = " "
+                        
+        
 
     jugador_x, jugador_y = buscar_jugador(mapa)
 
