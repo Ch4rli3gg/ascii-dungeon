@@ -350,6 +350,22 @@ def verificar_choque():
 
     return False
     
+def atacar():
+
+    global enemigos
+
+    for enemigo in enemigos:
+
+        distancia = abs(jugador_x - enemigo["x"]) + abs(jugador_y - enemigo["y"])
+
+        if distancia < 2:
+
+            print("⚔️ Eliminaste al enemigo")
+
+            enemigos.remove(enemigo)
+
+            return
+
 def verificar_victoria():
     if mapa[jugador_y][jugador_x] == "X":
         limpiar()
@@ -368,6 +384,8 @@ while True:
     
     if movimiento == "q":
         break
+    if movimiento == "v":
+        atacar()
     
     mover_jugador(movimiento)
 
