@@ -26,7 +26,9 @@ estado_salas = {
     
     "puerta": {
         "puerta": True
-    }
+    },
+    
+    "enemigos":{}
 
 }
 
@@ -86,6 +88,7 @@ def dibujar():
                     enemigo_x = enemigo["x"]
                     enemigo_y = enemigo["y"]
                     tipo = enemigo["tipo"]
+                    
 
                     if x == enemigo_x and y == enemigo_y:
 
@@ -301,6 +304,7 @@ def mover_enemigos():
         #if mapa[ey][ex] != "#" and not ocupado:
         if mapa[ey][ex] not in ["#", "D"] and not ocupado:
             nuevos_enemigos.append({
+                "id": enemigo["id"],
                 "x": ex,
                 "y": ey,
                 "tipo": tipo
@@ -309,6 +313,7 @@ def mover_enemigos():
         
         else:
             nuevos_enemigos.append({
+                "id": enemigo["id"],
                 "x": enemigo_x,
                 "y": enemigo_y,
                 "tipo": tipo
@@ -352,7 +357,7 @@ def verificar_choque():
     
 def atacar():
 
-    global enemigos
+    global enemigos, estado_salas
 
     for enemigo in enemigos:
 
@@ -361,6 +366,16 @@ def atacar():
         if distancia < 2:
 
             print("⚔️ Eliminaste al enemigo")
+            
+            if "salas/sala_enemigos.txt" not in estado_salas["enemigos"]:
+                estado_salas["enemigos"]["salas/sala_enemigos.txt"] = []
+                
+            
+
+            estado_salas["enemigos"]["salas/sala_enemigos.txt"].append(
+                enemigo["id"]
+            )
+            
 
             enemigos.remove(enemigo)
 

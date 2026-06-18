@@ -36,6 +36,15 @@ def cargar_nivel(sala, estado_salas):
 
     enemigos = buscar_enemigos(mapa)
     
+    muertos = estado_salas["enemigos"].get(sala, [])
+    
+    
+
+    enemigos = [
+        e for e in enemigos
+        if e["id"] not in muertos
+    ]
+        
     return mapa, jugador_x, jugador_y, enemigos
 
 #print(cargar_mapa("sala_prueba.txt"))
