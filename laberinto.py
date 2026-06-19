@@ -32,7 +32,7 @@ estado_salas = {
 
 }
 
-mapa, jugador_x, jugador_y, enemigos = cargar_nivel("salas/sala_inicio.txt",estado_salas)
+mapa, jugador_x, jugador_y, enemigos = cargar_nivel("inicio",estado_salas)
 
 memoria = []
 
@@ -174,7 +174,7 @@ def mover_jugador(movimiento):
     if destino:
 
         mapa, jugador_x, jugador_y, enemigos = cargar_nivel(
-            destino["archivo"], estado_salas
+            destino["sala"], estado_salas
         )
 
         sala_actual = destino["sala"]
@@ -357,7 +357,7 @@ def verificar_choque():
     
 def atacar():
 
-    global enemigos, estado_salas
+    global enemigos, estado_salas, sala_actual
 
     for enemigo in enemigos:
 
@@ -367,12 +367,12 @@ def atacar():
 
             print("⚔️ Eliminaste al enemigo")
             
-            if "salas/sala_enemigos.txt" not in estado_salas["enemigos"]:
-                estado_salas["enemigos"]["salas/sala_enemigos.txt"] = []
+            if sala_actual not in estado_salas["enemigos"]:
+                estado_salas["enemigos"][sala_actual] = []
                 
             
 
-            estado_salas["enemigos"]["salas/sala_enemigos.txt"].append(
+            estado_salas["enemigos"][sala_actual].append(
                 enemigo["id"]
             )
             

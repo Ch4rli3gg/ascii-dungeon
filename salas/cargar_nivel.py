@@ -1,10 +1,13 @@
 from salas.leer_salas import cargar_mapa
 from salas.buscar_jugador import buscar_jugador
 from salas.buscar_enemigos import buscar_enemigos
+from salas.mundo import archivos_salas
 
 def cargar_nivel(sala, estado_salas):
     
-    mapa = cargar_mapa(sala)
+    archivo = archivos_salas[sala]
+    
+    mapa = cargar_mapa(archivo)
     
     if sala == "salas/sala_llave.txt":
 

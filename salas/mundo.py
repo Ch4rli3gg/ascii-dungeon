@@ -73,3 +73,13 @@ conexiones = {
     }
 
 }
+
+archivos_salas = {
+
+    "inicio": "salas/sala_inicio.txt",
+    "pasillo": "salas/pasillo.txt",
+    "enemigos": "salas/sala_enemigos.txt",
+    "llave": "salas/sala_llave.txt",
+    "puerta": "salas/sala_puerta.txt"
+
+}
